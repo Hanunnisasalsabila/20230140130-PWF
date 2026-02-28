@@ -7,7 +7,7 @@
 ## Deskripsi
 Project Laravel 12 untuk tugas praktikum 2 PWF.
 
-Halaman utama yang sudah ditambahkan NIM dan Nama pada welcome page.
+## Screenshot
 
 ![Tampilan Laravel](screenshoot/Tampilan_Awal.png)
 ![Tampilan Laravel](screenshoot/Tampilan_Register.png)
