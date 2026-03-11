@@ -9,16 +9,21 @@ Melanjutkan project minggu kemarin untuk tugas praktikum 3 PWF.
 
 ## Screenshot
 
-![Tampilan Terminal](screenshoot/Terminal_migrate_berhasil.png)
+### Membuat File Model dan Migration
 ![Tampilan Terminal](screenshoot/Membuat_File_Model.png)
+
+### Isi Kodingan Migration
 ![Tampilan Terminal](screenshoot/Kodingan_File_Migration_Table_Product.png)
 ![Tampilan Terminal](screenshoot/Kodingan_File_Migration_Table_Categories.png)
 
-# Tampilan ERD
+### Migrate berhasil
+![Tampilan Terminal](screenshoot/Terminal_migrate_berhasil.png)
+
+### Tampilan ERD
 ![MYSQL](screenshoot/ERD.png)
-# Table Users
+### Table Users
 ![MYSQL](screenshoot/Table_users.png)
-# Table Product
+### Table Product
 ![MYSQL](screenshoot/Table_Product.png)
-# Table Categories
+### Table Categories
 ![MYSQL](screenshoot/Table_Categories.png)
