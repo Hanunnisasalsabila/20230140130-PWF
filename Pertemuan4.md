@@ -19,11 +19,11 @@ Melanjutkan project minggu kemarin untuk tugas praktikum 4 PWF.
 ![Tampilan Laravel](screenshoot/Tampilan_Tambah_Product.png)
 ![Tampilan Laravel](screenshoot/Tampilan_Tambah_Product_2.png)
 
-### Tampilan Halaman Tambah Product
+### Tampilan Halaman Edit Product
 ![Tampilan Laravel](screenshoot/Tampilan_Edit_Product.png)
 ![Tampilan Laravel](screenshoot/Tampilan_Edit_Product_2.png)
 
-### Tampilan ERD
+### Tampilan Halaman Hapus Product
 ![Tampilan Laravel](screenshoot/Tampilan_Hapus_Product.png)
 ![Tampilan Laravel](screenshoot/Tampilan_Hapus_Product_2.png)
 
