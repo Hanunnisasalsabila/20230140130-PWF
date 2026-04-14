@@ -10,6 +10,7 @@
                         <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">Product List</h2>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage your product inventory</p>
                     </div>
+                @can('manage-product')
                     <a href="{{ route('product.create') }}"
                         class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition duration-150 shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -17,6 +18,7 @@
                         </svg>
                         Add Product
                     </a>
+                @endcan
                 </div>
 
                     {{-- Flash Message --}}
@@ -31,12 +33,14 @@
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm">
                             <thead class="bg-gray-50 dark:bg-gray-700">
                                 <tr>
+                                    @can('manage-product')
                                     <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider w-12">#</th>
                                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider w-1/4">Name</th>
                                     <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider w-1/6">Quantity</th>
                                     <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider w-1/5">Price</th>
                                     <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider w-1/5">Owner</th>
                                     <th class="px-6 py-3 text-center text-xs font-semibold text-gray-500 dark:text-gray-300 uppercase tracking-wider w-1/6">Actions</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
@@ -58,19 +62,27 @@
                                         </td>
                                         <td class="px-6 py-4 text-gray-700 dark:text-gray-200 font-mono">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                                         <td class="px-6 py-4 text-gray-500 dark:text-gray-400">{{ $product->user->name ?? '-' }}</td>
+                                        
+                                        @can('manage-product')
                                         <td class="px-6 py-4">
                                             <div class="flex items-center justify-center gap-2">
+                                                {{-- View (Semua admin bisa lihat) --}}
                                                 <a href="{{ route('product.show', $product->id) }}" class="p-1.5 rounded-md text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition" title="View">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 5.943 7.523 5 12 5c4.478 0 8.268 4.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                                     </svg>
                                                 </a>
+                                                {{-- Edit (Hanya muncul jika lolos Policy update) --}}
+                                                @can('update', $product)
                                                 <a href="{{ route('product.edit', $product) }}" class="p-1.5 rounded-md text-gray-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/30 transition" title="Edit">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                     </svg>
                                                 </a>
+                                                @endcan
+                                                {{-- Delete (Hanya muncul jika lolos Policy delete) --}}
+                                                @can('delete', $product)
                                                 <form action="{{ route('product.delete', $product->id) }}" method="POST" onsubmit="return confirm('Delete this product?')">
                                                     @csrf
                                                     @method('DELETE')
@@ -80,8 +92,10 @@
                                                         </svg>
                                                     </button>
                                                 </form>
+                                                @endcan
                                             </div>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @empty
                                     <tr>
