@@ -18,7 +18,7 @@ class UpdateProductRequest extends FormRequest
             'name' => 'sometimes|string|max:255',
             'qty' => 'sometimes|integer|min:0',
             'price' => 'sometimes|numeric|min:0',
-            //'user_id' => 'sometimes|exists:users,id',
+            'user_id' => 'sometimes|exists:users,id',
         ];
     }
 }

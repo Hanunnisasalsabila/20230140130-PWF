@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
-// use App\Models\User; // Bisa di-comment karena sudah tidak dipakai
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -21,21 +21,16 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        $validated = $request->validated();
-        
-        // Otomatis mengisi user_id dengan ID admin yang sedang login
-        $validated['user_id'] = Auth::id();
-
-        $product = Product::create($validated);
+        $product = Product::create($request->validated());
 
         return redirect()->route('product.index')->with('success', 'Product created successfully.');
     }
 
     public function create()
     {
-        // $users = User::orderBy('name')->get(); <-- Di-comment
+        $users = User::orderBy('name')->get();
         
-        return view('product.create'); // compact dihapus karena tidak butuh data user lagi
+        return view('product.create', compact('users'));
     }
 
     public function show($id)
@@ -57,9 +52,9 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        // $users = User::orderBy('name')->get(); <-- Di-comment
+        $users = User::orderBy('name')->get();
         
-        return view('product.edit', compact('product')); // compact('users') dihapus
+        return view('product.edit', compact('product', 'users'));
     }
 
     public function delete($id)
