@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -21,9 +22,16 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        $product = Product::create($request->validated());
+        $validated = $request->validated();
+        $validated['user_id'] = Auth::id();
+        try {
+            Product::create($validated);
+            return redirect()->route('product.index')->with('success', 'Product created successfully.');
 
-        return redirect()->route('product.index')->with('success', 'Product created successfully.');
+        } catch (\Throwable $e) {
+            Log::error('Product store unexpected error', ['message' => $e->getMessage()]);
+            return redirect()->back()->withInput()->with('error', 'Unexpected error occurred.');
+        }
     }
 
     public function create()
@@ -44,10 +52,15 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         Gate::authorize('update', $product);
-        
-        $product->update($request->validated());
 
-        return redirect()->route('product.index')->with('success', 'Product updated successfully.');
+        try {
+            $product->update($request->validated());
+            return redirect()->route('product.index')->with('success', 'Product updated successfully.');
+
+        } catch (\Throwable $e) {
+            Log::error('Product update unexpected error', ['message' => $e->getMessage()]);
+            return redirect()->back()->withInput()->with('error', 'Unexpected error occurred while updating.');
+        }
     }
 
     public function edit(Product $product)

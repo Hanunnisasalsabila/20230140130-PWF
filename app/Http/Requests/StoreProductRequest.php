@@ -6,40 +6,31 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreProductRequest extends FormRequest
 {
-    /**
-     * Tentukan apakah user punya izin buat melakukan request ini.
-     */
     public function authorize(): bool
     {
-        // PERBAIKAN: Wajib diubah jadi true! Kalau false, nanti error "Unauthorized"
         return true;
     }
 
-    /**
-     * Aturan validasi (dipindah dari Controller).
-     */
     public function rules(): array
     {
         return [
             'name' => 'required|string|max:255',
-            'qty' => 'required|integer|min:0',
-            'price' => 'required|numeric|min:0',
-            'user_id' => 'required|exists:users,id',
+            'qty' => 'required|integer',
+            'price' => 'required|numeric',
         ];
     }
 
-    /**
-     * Pesan error custom (bahasa sendiri).
-     */
     public function messages(): array
     {
         return [
-            'name.required' => 'Eh, nama produknya belum diisi lho!',
-            'qty.required' => 'Jangan lupa isi jumlah produknya ya!',
-            'qty.integer' => 'Jumlah produk harus berupa angka bulat.',
-            'price.required' => 'Harganya wajib diisi biar bisa dijual!',
-            'price.numeric' => 'Harga harus berupa angka.',
-            'user_id.required' => 'Pemilik produk (Owner) belum dipilih.',
+            'name.required' => 'Nama produk wajib diisi.',
+            'name.max' => 'Nama produk tidak boleh lebih dari 255 karakter.',
+            
+            'qty.required' => 'Jumlah (kuantitas) produk wajib diisi.',
+            'qty.integer' => 'Jumlah produk harus berupa angka bulat (tidak boleh desimal).',
+            
+            'price.required' => 'Harga produk wajib diisi.',
+            'price.numeric' => 'Harga produk harus berupa angka yang valid.',
         ];
     }
 }
