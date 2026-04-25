@@ -16,9 +16,15 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    @can('manage-product')
+                    {{-- Menu Product (Bisa diakses semua) --}}
                     <x-nav-link :href="route('product.index')" :active="request()->routeIs('product.*')">
                         {{ __('Product') }}
+                    </x-nav-link>
+
+                    {{-- Menu Category (Hanya untuk Admin) --}}
+                    @can('manage-product')
+                    <x-nav-link :href="route('category.index')" :active="request()->routeIs('category.*')">
+                        {{ __('Category') }}
                     </x-nav-link>
                     @endcan
 
@@ -80,11 +86,17 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            @can('manage-product')
-            <x-responsive-nav-link :href="route('product.index')" :active="request()->routeIs('product.*')">
+            {{-- Menu Product (Bisa diakses semua) --}}
+            <x-nav-link :href="route('product.index')" :active="request()->routeIs('product.*')">
                 {{ __('Product') }}
-            </x-responsive-nav-link>
-            @endcan
+            </x-nav-link>
+
+            {{-- Menu Category (Hanya untuk Admin) --}}
+                    @can('manage-product')
+                    <x-nav-link :href="route('category.index')" :active="request()->routeIs('category.*')">
+                        {{ __('Category') }}
+                    </x-nav-link>
+                    @endcan
         </div>
 
         <!-- Responsive Settings Options -->

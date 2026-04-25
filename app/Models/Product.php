@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -13,20 +12,20 @@ class Product extends Model
 
     protected $fillable = [
         'user_id',
+        'category_id',
         'name',
         'qty',
         'price',
     ];
 
-    // Menambahkan ": BelongsTo" di akhir fungsi
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    // Menambahkan ": HasMany" di akhir fungsi
-    public function kategoris(): HasMany
+    // Relasi: Produk ini milik satu kategori
+    public function category(): BelongsTo
     {
-        return $this->hasMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
 }

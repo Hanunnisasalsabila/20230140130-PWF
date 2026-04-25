@@ -17,6 +17,7 @@ class UpdateProductRequest extends FormRequest
             'name' => 'sometimes|string|max:255',
             'qty' => 'sometimes|integer', 
             'price' => 'sometimes|numeric',
+            'category_id' => 'sometimes|exists:categories,id',
         ];
     }
 
@@ -31,6 +32,8 @@ class UpdateProductRequest extends FormRequest
             
             'price.required' => 'Harga produk wajib diisi.',
             'price.numeric' => 'Harga produk harus berupa angka yang valid.',
+
+            'category_id.required' => 'Kategori produk belum dipilih',
         ];
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -37,8 +38,9 @@ class ProductController extends Controller
     public function create()
     {
         $users = User::orderBy('name')->get();
-        
-        return view('product.create', compact('users'));
+        $categories = Category::all();
+
+        return view('product.create', compact('users', 'categories'));
     }
 
     public function show($id)
@@ -65,9 +67,10 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
+        $categories = Category::all();
         $users = User::orderBy('name')->get();
         
-        return view('product.edit', compact('product', 'users'));
+        return view('product.edit', compact('product', 'users', 'categories'));
     }
 
     public function delete($id)
