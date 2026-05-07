@@ -3,8 +3,13 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Models\User; // <-- Tambahan
-use Illuminate\Support\Facades\Gate; // <-- Tambahan
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
+
+// --- Tambahan untuk API Scramble ---
+use Illuminate\Support\Str;
+use Dedoc\Scramble\Scramble;
+use Illuminate\Routing\Route;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,10 +26,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Bikin Gate/Satpam bernama 'manage-product'
         Gate::define('manage-product', function (User $user) {
-            // Hanya izinkan jika usertype-nya adalah 'admin'
             return $user->usertype === 'admin';
+        });
+
+        // --- Tambahan untuk Konfigurasi Dokumentasi API ---
+        Scramble::configure()
+            ->routes(function (Route $route) {
+                return Str::startsWith($route->uri, 'api/');
+            });
+
+        Gate::define('viewApiDocs', function () {
+            return true;
         });
     }
 }
